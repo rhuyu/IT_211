@@ -1,0 +1,67 @@
+<!--
+Pig Latin Translator
+Randy Huynh 
+7/7/2023
+
+Pseudo Code:
+
+Index.html
+-Create a Title 
+-Create a textbox that Javascript will intake to split
+-Create button to translate
+-Create button to clear previous entry (added after initial phase) 
+-Add background color (added after initial phase)
+-Center the page (added after initial phase)
+-->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pig Latin Translator</title>
+  <style>
+    body {
+        display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #CBC3E3;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .button-container button {
+        margin: 2px;
+      }
+
+      h1 {
+        font-family: consolas;
+        letter-spacing: 4px;
+      }
+  </style>
+
+  <script src="script.js"></script>
+</head>
+<body>
+    <div class="container"></div>
+  <h1>PIG LATIN TRANSLATOR</h1>
+
+  <textarea id="inputText" rows="5" cols="50" placeholder="Enter text to translate"></textarea>
+  <br>
+  <div class="button-container">
+  <button onclick="translateToPigLatin()">Translate</button>
+  <button onclick="clearOutputText()">Clear</button>
+</div>
+  <br>
+  <p id="outputText"></p>
+</body>
+</html>
+ 
