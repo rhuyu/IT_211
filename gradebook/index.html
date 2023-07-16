@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gradebook</title>
+  <style>
+    body {
+      background-color: #f3e8ff; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1, button, form, p {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+  <h1>Gradebook</h1>
+  
+  <div>
+  <!-- Button for sorting alphabetically -->
+  <button onclick="sortAlphabetically()">Sort Alphabetically</button>
+  <!-- Button for sorting by grade -->
+  <button onclick="sortByGrade()">Sort by Grade</button>
+</div>
+
+  <!-- Container for student data -->
+  <div id="studentData">
+    <!-- The student data will be dynamically populated here -->
+  </div>
+
+  <!-- Student count indicator -->
+  <p>Student Count: <span id="studentCount"></span></p>
+
+  <!-- Form for adding a new student -->
+  <form onsubmit="addStudent(event)">
+    <label for="nameInput">Name: </label>
+    <input type="text" id="nameInput" required>
+    <label for="scoreInput">Score: </label>
+    <input type="number" id="scoreInput" required>
+    <button type="submit">Add Student</button>
+  </form>
+</div>
+  <script>
+    // Initial student data
+    let grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+    let gradePairs = grades.split(', ');
+
+    // Function to display student data
+    function displayStudentData(data) {
+      let studentDataContainer = document.getElementById('studentData');
+      studentDataContainer.innerHTML = ''; // Clear previous data
+
+      for (let i = 0; i < data.length; i++) {
+        let pair = data[i].split('|');
+        let name = pair[0];
+        let score = parseInt(pair[1]);
+
+        // Capitalize the first letter of the name
+        let capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+
+        // Create paragraph element for each student and display name and score
+        let studentInfo = document.createElement('p');
+        studentInfo.textContent = capitalized + ' - ' + score;
+        studentDataContainer.appendChild(studentInfo);
+      }
+    }
+
+    // Function to sort student data alphabetically
+    function sortAlphabetically() {
+      let sortedData = gradePairs.slice().sort((a, b) => {
+        let nameA = a.split('|')[0].toLowerCase();
+        let nameB = b.split('|')[0].toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+
+      displayStudentData(sortedData);
+    }
+
+    // Function to sort student data by grade
+    function sortByGrade() {
+      let sortedData = gradePairs.slice().sort((a, b) => {
+        let scoreA = parseInt(a.split('|')[1]);
+        let scoreB = parseInt(b.split('|')[1]);
+        return scoreA - scoreB;
+      });
+
+      displayStudentData(sortedData);
+    }
+
+    // Function to update student count indicator
+    function updateStudentCount(data) {
+      let studentCountElement = document.getElementById('studentCount');
+      studentCountElement.textContent = data.length;
+    }
+
+    // Function to add a new student
+    function addStudent(event) {
+      event.preventDefault();
+
+      // Get the values from input fields
+      let nameInput = document.getElementById('nameInput');
+      let scoreInput = document.getElementById('scoreInput');
+
+      let name = nameInput.value.trim();
+      let score = parseInt(scoreInput.value);
+
+      // Validate input values
+      if (name && !isNaN(score)) {
+        // Create a new student string
+        let newStudent = name.toLowerCase() + '|' + score;
+        // Add the new student to the array
+        gradePairs.push(newStudent);
+        // Display updated student data and count
+        displayStudentData(gradePairs);
+        updateStudentCount(gradePairs);
+
+        // Clear input fields
+        nameInput.value = '';
+        scoreInput.value = '';
+      }
+    }
+
+    // Initial display of student data and count
+    displayStudentData(gradePairs);
+    updateStudentCount(gradePairs);
+  </script>
+</body>
+</html>
